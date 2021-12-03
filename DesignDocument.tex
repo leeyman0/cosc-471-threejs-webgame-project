@@ -1,0 +1,74 @@
+% Created 2021-11-30 Tue 17:07
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{grffile}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Alex Menendez, Stanley C Kemp}
+\date{\today}
+\title{Design Document}
+\hypersetup{
+ pdfauthor={Alex Menendez, Stanley C Kemp},
+ pdftitle={Design Document},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 27.2 (Org mode 9.4.4)}, 
+ pdflang={English}}
+\begin{document}
+
+\maketitle
+
+\section{What Are We Going to Do?}
+\label{sec:org6ddc32c}
+We are going to create a game about rotating/moving an object in
+order to fit it into a moving pane. The panes come faster as
+difficulty increases, and the holes get smaller (but not impossible
+to fit into ☺)
+
+\subsection{Controls}
+\label{sec:orgac249ab}
+
+\subsubsection{Scheme 1}
+\label{sec:orgeab2c53}
+\begin{itemize}
+\item Q, E --- rotate counter/clockwise around depth
+\item W, A, S, D --- standard movement controls
+\item <, > --- rotate around height
+\end{itemize}
+
+\subsubsection{Scheme 2}
+\label{sec:org9031708}
+\begin{itemize}
+\item Arrow keys --- move shape
+\item E, D --- rotate around depth
+\item W, S --- rotate around width
+\item Q, A --- rotate around height
+\end{itemize}
+\section{How Are We Going to Do It?}
+\label{sec:org0b47907}
+\subsection{How are we going to generate the shapes?}
+\label{sec:orgdf8c868}
+Good question. The plan is to model a single shape at first in order
+to test the abilities of our program. 
+\subsection{How are we going to generate the holes?}
+\label{sec:orgf6ff5df}
+Using subtractive geometry. First, we will generate a silhouette of
+the 3D shape that the user controls from a random angle.
+
+Then, subtract the silhouette in a random place in a vector rectangle,
+hollow out some more according to difficulty. Then extrude the rectangle
+to get the hole.
+
+\subsection{How is the difficulty going to increase?}
+\label{sec:org662029e}
+\end{document}

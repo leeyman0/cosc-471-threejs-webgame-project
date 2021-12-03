@@ -1,0 +1,38 @@
+#+TITLE: Design Document
+#+AUTHOR: Alex Menendez, Stanley C Kemp
+#+OPTIONS: toc:nil
+
+* What Are We Going to Do?
+  We are going to create a game about rotating/moving an object in
+  order to fit it into a moving pane. The panes come faster as
+  difficulty increases, and the holes get smaller (but not impossible
+  to fit into ☺)
+
+** Controls
+   
+*** Scheme 1
+    - Q, E --- rotate counter/clockwise around depth
+    - W, A, S, D --- standard movement controls
+    - <, > --- rotate around height
+
+*** Scheme 2
+    - Arrow keys --- move shape
+    - E, D --- rotate around depth
+    - W, S --- rotate around width
+    - Q, A --- rotate around height
+ 
+* How Are We Going to Do It?  
+** How are we going to generate the shapes?
+   Good question. The plan is to model a single shape at first in order
+   to test the abilities of our program. Then later, we will make a shape
+   algorithm to select a shape.
+** How are we going to generate the holes?
+   Using subtractive geometry. First, we will generate a silhouette of
+   the 3D shape that the user controls from a random angle.
+
+   Then, subtract the silhouette in a random place in a vector rectangle,
+   hollow out some more according to difficulty. Then extrude the rectangle
+   to get the hole.
+   
+** How is the difficulty going to increase?
+   The hole will get smaller, and the pane will get faster.
