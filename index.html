@@ -27,8 +27,11 @@
 
       const PROJECTILE_SPEED = 0.75;
       const PROJECTILE_DAMAGE = 5;
+
+      const CANVAS_ID = "c";
     </script>
     <script src="./three.min.js"></script>
+    <script src="./OBJLoader.js"></script>
     <script src="./internalgame.js"></script>
     <script src="./externalrepresentation.js"></script>
     <canvas id="c"></canvas>
@@ -108,9 +111,32 @@
 	  });
 				    
       }
+    </script>
+    <script>
+      // Setting up the graphics
+      const canvas = document.getElementById(CANVAS_ID);
+      let tapestry = {
+	  scene : new THREE.Scene(),
+	  camera : new THREE.PerspectiveCamera(75,
+					       window.innerWidth
+					       / window.innerHeight,
+					       0.1,
+					       1000),
+	  renderer : new THREE.WebGLRenderer({canvas}),
+	  light : new THREE.DirectionalLight(0xFFFFFF, 1),
+      }
+      const objLoader = new THREE.OBJLoader();
+      objLoader.load("./assets/NormalCar2.obj", function () {
+	  tapestry.scene.add(root);
+      });
+    </script>
+    <script>
+      
       function drawLoop() {
 	  requestAnimationFrame(drawLoop);
-	  handleinput();
+	  handleinput(state);
+	  advance(state);
+	  updateScene(state, tapestry);
 	  
       }
     </script>

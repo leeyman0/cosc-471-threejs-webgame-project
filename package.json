@@ -1,0 +1,22 @@
+{
+  "name": "three-js-skier",
+  "version": "1.0.0",
+  "description": "This is a web game written using the library ~three.js~. Not sure what else to put here.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leeyman0/cosc-471-threejs-webgame-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/leeyman0/cosc-471-threejs-webgame-project/issues"
+  },
+  "homepage": "https://github.com/leeyman0/cosc-471-threejs-webgame-project#readme",
+  "dependencies": {
+    "http-server": "^14.0.0"
+  }
+}
