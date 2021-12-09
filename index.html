@@ -10,21 +10,25 @@
     <script>
       // constants
       const MAP_SIZE = 100;
-      const PLAYER_SPEED = 0.5;
       const MAP_BASE_SPEED = 0.2;
+
+      const PLAYER_SPEED = 0.5;
+      const PLAYER_BASE_HEALTH = 100;
 
       const TREE_RADIUS = 1;
       const TREE_SPAWN_RATE = 0.002;
+      const TREE_DAMAGE = 12;
 
       const MONSTER_BASE_HEALTH = 25;
       const MONSTER_RADIUS = 1;
       const MONSTER_SPEED = 1.5 * PLAYER_SPEED;
+      const TICK_MONSTER_THRESHOLD = 400000;
+      const MONSTER_DAMAGE = 19;
 
       const PROJECTILE_SPEED = 0.75;
-      const TICK_MONSTER_THRESHOLD = 400000;
+      const PROJECTILE_DAMAGE = 5;
     </script>
     <script src="./three.min.js"></script>
-    <script src="./ShapeGenerator.js"></script>
     <script src="./internalgame.js"></script>
     <script src="./externalrepresentation.js"></script>
     <canvas id="c"></canvas>
@@ -39,6 +43,8 @@
 	  backPressed : false,
 	  keyPressed : false,
 	  spacePressed: false,
+	  
+	  score: 0,
 
 	  player : {
 	      position : {
@@ -46,6 +52,7 @@
 		  z : 10,
 	      },
 	      health : 100,
+	      stunLocked : false,
 	  },
 	  projectileTrigger : false,
 	  projectilePositions : [],
