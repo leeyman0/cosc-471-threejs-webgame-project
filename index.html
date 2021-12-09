@@ -7,12 +7,104 @@
     </style>
   </head>
   <body>
+    <script>
+      // constants
+      const MAP_SIZE = 100;
+      const PLAYER_SPEED = 0.5;
+      const MAP_BASE_SPEED = 0.2;
+
+      const TREE_RADIUS = 1;
+      const TREE_SPAWN_RATE = 0.002;
+
+      const MONSTER_BASE_HEALTH = 25;
+      const MONSTER_RADIUS = 1;
+      const MONSTER_SPEED = 1.5 * PLAYER_SPEED;
+
+      const PROJECTILE_SPEED = 0.75;
+      const TICK_MONSTER_THRESHOLD = 400000;
+    </script>
     <script src="./three.min.js"></script>
     <script src="./ShapeGenerator.js"></script>
+    <script src="./internalgame.js"></script>
+    <script src="./externalrepresentation.js"></script>
     <canvas id="c"></canvas>
     <script>
       // global state
+      let state = {
+	  // Input state
+	  gameStarted : false,
+	  leftPressed : false,
+	  rightPressed : false,
+	  forwardPressed : false,
+	  backPressed : false,
+	  keyPressed : false,
+	  spacePressed: false,
+
+	  player : {
+	      position : {
+		  x : 50,
+		  z : 10,
+	      },
+	      health : 100,
+	  },
+	  projectileTrigger : false,
+	  projectilePositions : [],
+	  projectileCooldownState : -1,
+	  treePositions : [],
+	  monsterIn: false,
+	  monster: {
+	      position: {
+		  x : MAP_SIZE,
+		  z : MAP_SIZE,
+	      }
+	      health: MONSTER_BASE_HEALTH,
+	  },
+      };
+      /* input handling */ {
+	  document.addEventListener("keypress", function ({keyCode}) {
+	      keyPressed = true;
+	      switch (keyCode) {
+	      case 37:
+		  state.leftPressed = true;
+		  break;
+	      case 38:
+		  state.forwardPressed = true;
+		  break;
+	      case 39:
+		  state.rightPressed = true;
+		  break;
+	      case 40:
+		  state.backPressed = true;
+		  break;
+	      default:
+		  break;
+	      }    
+	  });
+	  document.addEventListener("keyup", function({keyCode}) {
+	      keyPressed = false;
+	      switch (keyCode) {
+	      case 37:
+		  state.leftPressed = false;
+		  break;
+	      case 38:
+		  state.forwardPressed = false;
+		  break;
+	      case 39:
+		  state.rightPressed = false;
+		  break;
+	      case 40:
+		  state.backPressed = false;
+		  break;
+	      default:
+		  break;
+	      }
+	  });
+				    
+      }
       function drawLoop() {
+	  requestAnimationFrame(drawLoop);
+	  handleinput();
+	  
       }
     </script>
   </body>
