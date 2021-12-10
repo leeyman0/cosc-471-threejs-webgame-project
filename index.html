@@ -113,22 +113,31 @@
       }
     </script>
     <script>
-      // Setting up the graphics
+      /* // Setting up the graphics
       const canvas = document.getElementById(CANVAS_ID);
       let tapestry = {
-	  scene : new THREE.Scene(),
-	  camera : new THREE.PerspectiveCamera(75,
-					       window.innerWidth
-					       / window.innerHeight,
-					       0.1,
-					       1000),
-	  renderer : new THREE.WebGLRenderer({canvas}),
-	  light : new THREE.DirectionalLight(0xFFFFFF, 1),
+      scene : new THREE.Scene(),
+      camera : new THREE.PerspectiveCamera(75,
+      window.innerWidth
+      / window.innerHeight,
+      0.1,
+      1000),
+      renderer : new THREE.WebGLRenderer({canvas}),
+      light : new THREE.DirectionalLight(0xFFFFFF, 1),
       }
       const objLoader = new THREE.OBJLoader();
+      tapestry.scene.add(tapestry.light);
       objLoader.load("./assets/NormalCar2.obj", function () {
-	  tapestry.scene.add(root);
-      });
+      tapestry.scene.add(root);
+      }); */
+
+      const canvas = document.getElementById(CANVAS_ID);
+      const ctx = canvas.getContext('2d');
+
+      let tapestry = {
+	  ctx,
+      };
+	  
     </script>
     <script>
       

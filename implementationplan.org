@@ -1,0 +1,24 @@
+#+TITLE: How Should It Work?
+* The General Structure Of The Project
+  I designed this project to make sense from an imperative standpoint. The state
+  of a game gets passed through each function in the structure
+  as a variable, getting read and modified in order to produce change.
+
+  At the end, the state gets processed and turned into a visual representation on
+  the screen according to the changes made and constants defined on the files.
+  
+  These are the functions of various files:
+  - ~index.html~ :: This is the file that the user sees. It contains the main loop
+    of the code, as well as important initialization of graphics, input handling,
+    the initial game
+    state, and constants that are necessary to the functioning of the code.
+  - ~three.min.js~ :: This is a minimized JavaScript library made for production
+    code. It contains the important graphics functions that we need to interface
+    with WebGL and GLSL. It is included as a tag from ~index.html~.
+  - ~internalgame.js~ :: This file gets included from ~index.html~ as a tag.
+    This is how the internal model of the game acts. The game executes the
+    functions in this code to know how the game should act internally.
+  - ~externalrepresentation.js~ :: This file is also included from ~index.html~ as
+    a tag. It translates the current game state from an internal representation to
+    an external one on the screen.
+    

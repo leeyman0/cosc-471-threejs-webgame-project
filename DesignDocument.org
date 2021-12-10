@@ -2,14 +2,24 @@
 #+AUTHOR: Alex Menendez, Stanley C Kemp
 #+OPTIONS: toc:nil
 
+Hello, this is a small note that a reorg has happened. To see old plans, open
+the OLDSTUFF drawers.
+
 * What Are We Going to Do?
+  _Disclaimer_: This is just one idea that was had by me, probably need to
+  discuss this with Alex (probably you if you are reading this) first.
+
+  My idea is to create a 2D topdown skiing game. The obstacles are trees and a
+  monster that occaisionally appears. The obstacles can be shot at with
+  a gun that is fired by spacebar, and they get destroyed.
+  
+  :OLDSTUFF:
   We are going to create a game about rotating/moving an object in
   order to fit it into a moving pane. The panes come faster as
   difficulty increases, and the holes get smaller (but not impossible
   to fit into ☺)
-
-** Controls
-   
+  :END:
+** Old Controls
 *** Scheme 1
     - Q, E --- rotate counter/clockwise around depth
     - W, A, S, D --- standard movement controls
@@ -20,19 +30,46 @@
     - E, D --- rotate around depth
     - W, S --- rotate around width
     - Q, A --- rotate around height
- 
+    
+** New Controls
+*** The Scheme
+    - Arrow Keys --- Move
+    - Spacebar --- Fire
+*** A More Realistic Scheme
+    - Left, Right Arrow Keys --- Turn Skiier in that direction (limited to a 180°
+      span facing forward)
+    - Forward arrow Key --- Speed up
+    - Backward arrow Key --- Slow down
+    - Spacebar --- Fire in the direction you are facing
 * How Are We Going to Do It?  
-** How are we going to generate the shapes?
+** How are we going to generate the obstacles?
+   The trees are going to be randomly generated at random points on the map at run
+   time contiguously. This is controlled by a constant growth rate on a spawn rate.
+
+   The monster will only spawn after a certain number of ticks. After this, it can
+   shot at and game ended, in which case it will go back into hiding for a while
+   until it is spawned again.
+   :OLDSTUFF:
+   *HOW WILL WE GENERATE SHAPES?*
    Good question. The plan is to model a single shape at first in order
    to test the abilities of our program. Then later, we will make a shape
    algorithm to select a shape.
-** How are we going to generate the holes?
+   :END:
+   :OLDSTUFF:
+   *HOW WILL WE GENERATE HOLES?*
    Using subtractive geometry. First, we will generate a silhouette of
    the 3D shape that the user controls from a random angle.
 
    Then, subtract the silhouette in a random place in a vector rectangle,
    hollow out some more according to difficulty. Then extrude the rectangle
    to get the hole.
-   
-** How is the difficulty going to increase?
+   :END:
+   :OLDSTUFF:
+   *HOW WILL WE INCREASE COMPLEXITY OVER TIME?*
    The hole will get smaller, and the pane will get faster.
+   :END:
+** What does the gameworld look like internally?
+   There is a 2D game map of 100 units on either side. There are two axes, X for
+   side to side, Z for front to back. There is no Y axis modeled, yet.
+   The trees move towards the screen on the Z axis once they are spawned in.
+   The player can traverse the X and Z axes in order to avoid obstacles.
