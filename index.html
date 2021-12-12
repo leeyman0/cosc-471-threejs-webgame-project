@@ -3,12 +3,40 @@
     <title></title>
     <meta charset="UTF-8" />
     <style>
-      body { margin: 0; } 	    
+      body {
+	  margin: 0;
+      }
+      
+      .container {
+	  position: relative;
+	  width: 100%;
+	  height: 100%;
+	  overflow: none;
+      }
+      
+      canvas {
+	  position: absolute;
+	  width: 100%;
+	  height: 100%;
+      }
+      #text {
+	  background-color: transparent;
+	  z-index: 15;
+	  top: 0px;
+	  left: 0px;
+	  display: block;
+      }
+      #graphics {
+	  z-index: 10;
+      }
     </style>
   </head>
   <body>
     <script>
       // constants
+      // All time values are measured in ticks --- i.e. amount of times the main
+      // loop completes.
+      // All spatial values are measured in the same units
       const MAP_SIZE = 100;
       const MAP_BASE_SPEED = 0.2;
 
@@ -22,53 +50,29 @@
       const MONSTER_BASE_HEALTH = 25;
       const MONSTER_RADIUS = 1;
       const MONSTER_SPEED = 1.5 * PLAYER_SPEED;
-      const TICK_MONSTER_THRESHOLD = 400000;
+      const MONSTER_THRESHOLD = 4000;
+      const MONSTER_COOLDOWN = 2000;
       const MONSTER_DAMAGE = 19;
 
+      // Constants
       const PROJECTILE_SPEED = 0.75;
       const PROJECTILE_DAMAGE = 5;
+      const PROJECTILE_COOLDOWN = 30;
 
-      const CANVAS_ID = "c";
+      const CANVAS_ID = "graphics";
+      const TEXT_OVERLAY_ID = "ui";
+      // ticks the player must wait before they can start over
+      const COOLDOWN = 100;
     </script>
     <script src="./three.min.js"></script>
     <script src="./internalgame.js"></script>
     <script src="./externalrepresentation.js"></script>
-    <canvas id="c"></canvas>
+    <script src="./initialState.js"></script>
+    <div class="container">
+      <canvas id="ui"></canvas>
+      <canvas id="graphics"></canvas>
+    </div>
     <script>
-      // global state
-      let state = {
-	  // Input state
-	  gameStarted : false,
-	  leftPressed : false,
-	  rightPressed : false,
-	  forwardPressed : false,
-	  backPressed : false,
-	  keyPressed : false,
-	  spacePressed: false,
-	  
-	  score: 0,
-
-	  player : {
-	      position : {
-		  x : 50,
-		  z : 10,
-	      },
-	      health : 100,
-	      stunLocked : false,
-	  },
-	  projectileTrigger : false,
-	  projectilePositions : [],
-	  projectileCooldownState : -1,
-	  treePositions : [],
-	  monsterIn: false,
-	  monster: {
-	      position: {
-		  x : MAP_SIZE,
-		  z : MAP_SIZE,
-	      },
-	      health: MONSTER_BASE_HEALTH,
-	  },
-      };
       /* input handling */ {
 	  document.addEventListener("keypress", function ({keyCode}) {
 	      keyPressed = true;
@@ -107,46 +111,61 @@
 	      default:
 		  break;
 	      }
-	  });
-				    
+	  });				    
       }
     </script>
     <script>
-      /* // Setting up the graphics
+      console.log("Setting up the graphics");
+      // Setting up the graphics
       const canvas = document.getElementById(CANVAS_ID);
+      const textCanvas = document.getElementById(TEXT_OVERLAY_ID);
       let tapestry = {
-      scene : new THREE.Scene(),
-      camera : new THREE.PerspectiveCamera(75,
-      window.innerWidth
-      / window.innerHeight,
-      0.1,
-      1000),
-      renderer : new THREE.WebGLRenderer({canvas}),
-      light : new THREE.DirectionalLight(0xFFFFFF, 1),
+	  scene : new THREE.Scene(),
+	  camera : new THREE.PerspectiveCamera(75,
+					       window.innerWidth
+					       / window.innerHeight,
+					       0.1,
+					       1000),
+	  renderer : new THREE.WebGLRenderer({canvas}),
+	  textContext : textCanvas.getContext('2d'),
+	  light : new THREE.DirectionalLight(0xFFFFFF, 1),
       }
-      const objLoader = new THREE.OBJLoader();
-      tapestry.scene.add(tapestry.light);
-      objLoader.load("./assets/NormalCar2.obj", function () {
-      tapestry.scene.add(root);
-      }); */
 
-      const canvas = document.getElementById(CANVAS_ID);
-      const ctx = canvas.getContext('2d');
-
-      let tapestry = {
-	  ctx,
-      };
-	  
+      tapestry.textContext.fillStyle = '#FF0000';
+      tapestry.textContext.fillText("Hello from hell", 20, 20);
+      
     </script>
     <script>
       
       function drawLoop() {
-	  requestAnimationFrame(drawLoop);
-	  handleinput(state);
-	  advance(state);
+	  requestAnimationFrame(drawLoop); // Setting up the recursive draw loop
+
+	  ++state.ticks; // Incrementing the number of ticks one
+	  // Debug
+	  // console.log(`Ticks: ${state.ticks}`);
+	  
+	  handleinput(state); // Process the input from the arrow keys
+
+	  if (state.newGame) // Get a new copy of a game
+	      state = {...initialState};
+	  
+	  if (state.gameStarted)
+	      advance(state); // The game has been started
+	  else if (state.gameOver) {
+	      gameOver(state);
+	  } else {
+	      titleScreen(state);
+	      // The game has not been started yet, show something peaceful
+	      // Do something else here
+	      if (state.keyPressed) {
+		  state.gameStarted = true;
+	      }
+	  }
+	  // This translates what is in the game code to what's on the screen
 	  updateScene(state, tapestry);
 	  
       }
+      drawLoop();
     </script>
   </body>
 </html>
