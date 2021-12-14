@@ -21,7 +21,7 @@ function handleinput(state) {
 	} else {
 	    state.projectileTrigger = false;
 	}
-    } else {
+    } else if (state.gameOver) {
 	if (state.keyPressed && // 
 	    state.ticksBeforeCooldown - COOLDOWN >= state.ticks) {
 	    state.gameStarted = true;

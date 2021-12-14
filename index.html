@@ -67,6 +67,8 @@
       const SCREEN_WIDTH = window.innerWidth;
       const SCREEN_HEIGHT = window.innerHeight;
 
+      const UI_FONT = "15pt Helvetica";
+      
       const FULL_HEALTH_BAR_WIDTH = 300;
     </script>
     <script src="./three.min.js"></script>
@@ -79,8 +81,9 @@
     </div>
     <script>
       /* input handling */ {
-	  document.addEventListener("keypress", function ({keyCode}) {
-	      keyPressed = true;
+	  document.addEventListener("keydown", function ({keyCode}) {
+	      state.keyPressed = true;
+	      // console.log(`Key Pressed: ${keyCode}`);
 	      switch (keyCode) {
 	      case 37:
 		  state.leftPressed = true;
@@ -96,10 +99,12 @@
 		  break;
 	      default:
 		  break;
-	      }    
+	      }
+	      console.log(state);
+	      // console.log(state);
 	  });
 	  document.addEventListener("keyup", function({keyCode}) {
-	      keyPressed = false;
+	      state.keyPressed = false;
 	      switch (keyCode) {
 	      case 37:
 		  state.leftPressed = false;
@@ -116,6 +121,7 @@
 	      default:
 		  break;
 	      }
+	      console.log(state);
 	  });				    
       }
     </script>
@@ -166,7 +172,6 @@
 	  else if (state.gameOver) {
 	      gameOver(state);
 	  } else {
-	      titleScreen(state);
 	      // The game has not been started yet, show something peaceful
 	      // Do something else here
 	      if (state.keyPressed) {
