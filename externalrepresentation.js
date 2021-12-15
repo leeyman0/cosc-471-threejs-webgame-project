@@ -16,6 +16,10 @@ function updateScene(state, tapestry) {
 				      state.player.health
 				      / PLAYER_BASE_HEALTH
 				      * FULL_HEALTH_BAR_WIDTH, 10);
+	tapestry.textContext.fillStyle = "white";
+	tapestry.textContext.fillText(`Score: ${state.score}`,
+				      Math.round(SCREEN_WIDTH / 2),
+				      20);
     } else {
 	// Draw title screen
 	drawTitleScreen(state, tapestry);

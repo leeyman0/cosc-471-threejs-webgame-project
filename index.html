@@ -100,7 +100,7 @@
 	      default:
 		  break;
 	      }
-	      console.log(state);
+	      // console.log(state);
 	      // console.log(state);
 	  });
 	  document.addEventListener("keyup", function({keyCode}) {
@@ -121,38 +121,11 @@
 	      default:
 		  break;
 	      }
-	      console.log(state);
+	      // console.log(state);
 	  });				    
       }
     </script>
-    <script>
-      console.log("Setting up the graphics");
-      // Setting up the graphics
-      const canvas = document.getElementById(CANVAS_ID);
-      const textCanvas = document.getElementById(TEXT_OVERLAY_ID);
-      canvas.width = SCREEN_WIDTH;
-      canvas.height = SCREEN_HEIGHT;
-      textCanvas.width = SCREEN_WIDTH;
-      textCanvas.height = SCREEN_HEIGHT;
-      let tapestry = {
-	  scene : new THREE.Scene(),
-	  camera : new THREE.PerspectiveCamera(75,
-					       window.innerWidth
-					       / window.innerHeight,
-					       0.1,
-					       1000),
-	  renderer : new THREE.WebGLRenderer({canvas}),
-	  textContext : textCanvas.getContext('2d'),
-	  light : new THREE.DirectionalLight(0xFFFFFF, 1),
-      }
-      let healthGradient
-	  = tapestry.textContext.createLinearGradient(10, 10,
-						      FULL_HEALTH_BAR_WIDTH,
-						      100);
-      healthGradient.addColorStop(0.0, "red");
-      healthGradient.addColorStop(1.0, "green");
-      
-    </script>
+    <script src="graphicsInit.js"></script>
     <script>
       
       function drawLoop() {
