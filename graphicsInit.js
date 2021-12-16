@@ -15,7 +15,7 @@ let tapestry = {
 					 1000),
     renderer : new THREE.WebGLRenderer({canvas}),
     textContext : textCanvas.getContext('2d'),
-    light : new THREE.DirectionalLight(0xFFFFFF, 1),
+    light : new THREE.HemisphereLight(0xAAAAEE, 0xFFFFFF, 0.6),
 };
 
 tapestry.renderer.setClearColor( 0xAAAAEE, 1);
@@ -58,6 +58,7 @@ tapestry.camera.rotateX(Math.PI * 0.2);
 // tapestry.camera.pointAt(0, 0, 0); doesnt work
 tapestry.scene.add(map);
 tapestry.scene.add(ambience);
+tapestry.scene.add(tapestry.light);
 tapestry.scene.add(tapestry.camera);
 
 // We are going to compose our assets using additive synthesis (i.e. sticking
