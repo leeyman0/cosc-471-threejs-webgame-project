@@ -1,4 +1,3 @@
-
 console.log("Setting up the graphics");
 // Setting up the graphics
 const canvas = document.getElementById(CANVAS_ID);
@@ -37,20 +36,26 @@ const mapMaterial = new THREE.MeshPhongMaterial({
 });
 const map = new THREE.Mesh(mapGeometry, mapMaterial);
 map.rotateX(Math.PI * 0.5);
+map.position.set(MAP_SIZE / 2, 0, 0);
 // There shall be some ambient
 // light, to emulate the snow light reflecting off of snow
 const ambience = new THREE.AmbientLight( 0x404040 );
 
 // There shall be light
-const directional = new THREE.DirectionalLight( 0xFFFFFF, 0.6 );
-directional.position.set(100, 500, 400);
+const directional = new THREE.DirectionalLight( 0xFFFFFF, 1 );
+directional.position.set(MAP_SIZE, MAP_SIZE, MAP_SIZE);
+directional.lookAt(map.position);
 
 // Helps to visualize the direction of the directional light
 // const directionalHelper = new THREE.DirectionalLightHelper(directional);
 // tapestry.scene.add(directionalHelper);
 // Adding all of the things
-tapestry.camera.position.set(0, 0, 5);
-// tapestry.camera.pointAt(0, 0, 0);
+tapestry.camera.position.set(MAP_SIZE / 2, MAP_SIZE * 0.6, 0);
+tapestry.camera.rotateX(-1.5707963267948961);
+tapestry.camera.rotateZ(Math.PI * 1);
+tapestry.camera.rotateX(Math.PI * 0.2);
+// map.lookAt(tapestry.camera.position);
+// tapestry.camera.pointAt(0, 0, 0); doesnt work
 tapestry.scene.add(map);
 tapestry.scene.add(ambience);
 tapestry.scene.add(tapestry.camera);
@@ -62,7 +67,7 @@ tapestry.scene.add(tapestry.camera);
 // Fun fact: our skiier is actually snowboarding,
 // Doesn't mean that he doesn't ski in his off hours though
 function Skiier() {
-    const skiier = new THREE.Group();
+    let skiier = new THREE.Group();
     // The head shall be a sphere
     const headGeometry = new THREE.SphereGeometry(0.75);
     const headMaterial = new THREE.MeshPhongMaterial({
@@ -96,7 +101,6 @@ function Skiier() {
     // Return the skiier
     return skiier;
 }
-
 // // Testing the skiier
 // let the_guy = Skiier();
 // the_guy.position.set(0, 0, 0);
@@ -104,7 +108,7 @@ function Skiier() {
 // tapestry.scene.add(the_guy);
 
 function Tree() {
-    const tree = new THREE.Group();
+    let tree = new THREE.Group();
 
     const tree_color = 0x669900; 
 
@@ -141,7 +145,7 @@ function Tree() {
 // Our monster is vegetarian, he just chases the guy because he smells cheese
 // puffs.
 function Monster() {
-    const monster = new THREE.Group();
+    let monster = new THREE.Group();
 
     const monstermaterial = new THREE.MeshPhongMaterial({
 	color : 0x990099,
@@ -195,12 +199,3 @@ function Monster() {
 // the_guy.position.set(0, 0, 0);
 // the_guy.rotateY();
 // tapestry.scene.add(the_guy);
-
-
-
-
-
-
-
-
-

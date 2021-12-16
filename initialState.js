@@ -40,7 +40,11 @@ let state = {
     projectileCooldownState : -1,
     
     // The state of the trees in the area
-    treePositions : [],
+    treePositions : [
+	{ x : 45, z : 54 },
+	{ x : 45, z : 0 },
+	{ x : 25, z : 25 },
+    ],
 
     // The state of the monster
     monsterIn: false,

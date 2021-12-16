@@ -1,8 +1,28 @@
 // Put the code that generates graphics here
 function updateScene(state, tapestry) {
+    let current_scene = tapestry.scene.clone();
+    // Putting the trees on the scene
+    state.treePositions.forEach(function ({x, z}) {
+	let tree = Tree();
+	tree.position.set(x, 0.5, z);
+	current_scene.add(tree);
+    });
 
+    /* adding the skiier */ {
+	let {x, z} = state.player.position;
+	let skiier = Skiier();
+	skiier.position.set(x, 0.5, z);
+	current_scene.add(skiier);
+	// console.log(skiier.position);
+    }
+    
+    current_scene.add(tapestry.camera);
+
+    // const axes_helper = new THREE.AxesHelper();
+    // current_scene.add(axes_helper);
+    
     // Draw the game
-    tapestry.renderer.render(tapestry.scene, tapestry.camera);
+    tapestry.renderer.render(current_scene, tapestry.camera);
 
     // Clear the UI
     tapestry.textContext.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
@@ -20,6 +40,12 @@ function updateScene(state, tapestry) {
 	tapestry.textContext.fillText(`Score: ${state.score}`,
 				      Math.round(SCREEN_WIDTH / 2),
 				      20);
+	{
+	    let {x, z} = state.player.position;
+	    tapestry.textContext.fillText(`Player Coordinates: x=${x}, z=${z}`,
+					  20,
+					  Math.round(SCREEN_HEIGHT - 50));
+	}				      
     } else {
 	// Draw title screen
 	drawTitleScreen(state, tapestry);

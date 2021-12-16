@@ -1,20 +1,20 @@
 function handleinput(state) {
     if (state.gameStarted) {
 	if (state.leftPressed) {
-	    if (state.player.position.x > 0)
-		state.player.position.x -= PLAYER_SPEED;
-	}
-	if (state.rightPressed) {
 	    if (state.player.position.x < MAP_SIZE)
 		state.player.position.x += PLAYER_SPEED;
 	}
+	if (state.rightPressed) {
+	    if (state.player.position.x > 0)
+		state.player.position.x -= PLAYER_SPEED;
+	}
 	if (state.forwardPressed) {
-	    if (state.player.position.y < MAP_SIZE)
-		state.player.position.y += PLAYER_SPEED;
+	    if (state.player.position.z < MAP_SIZE)
+		state.player.position.z += PLAYER_SPEED;
 	}
 	if (state.backPressed) {
-	    if (state.player.position.y > 0)
-		state.player.position.y -= PLAYER_SPEED;
+	    if (state.player.position.z > 0)
+		state.player.position.z -= PLAYER_SPEED;
 	}
 	if (state.spacePressed) {
 	    state.projectileTrigger = true;

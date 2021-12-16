@@ -140,8 +140,9 @@
 	  if (state.newGame) // Get a new copy of a game
 	      state = {...initialState};
 	  
-	  if (state.gameStarted)
-	      advance(state); // The game has been started
+	  if (state.gameStarted) {
+	      // advance(state); // The game has been started
+	  }
 	  else if (state.gameOver) {
 	      gameOver(state);
 	  } else {
