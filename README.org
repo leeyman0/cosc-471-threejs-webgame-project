@@ -1,3 +1,4 @@
-#+TITLE: CEPHALOPOD SPORT
-This is a web game written using the library ~three.js~. Not sure what else to put
-here.
+#+TITLE: Untitled Skiing Game
+This is a web game written using the library ~three.js~. To run this project,
+download the code, then open ~index.html~ in a web browser that supports ES6 or
+later. To control the skiier, press the arrow keys.
