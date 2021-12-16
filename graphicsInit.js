@@ -36,7 +36,7 @@ const mapMaterial = new THREE.MeshPhongMaterial({
 });
 const map = new THREE.Mesh(mapGeometry, mapMaterial);
 map.rotateX(Math.PI * 0.5);
-map.position.set(MAP_SIZE / 2, 0, 0);
+map.position.set(MAP_SIZE / 2, 0, MAP_SIZE / 2);
 // There shall be some ambient
 // light, to emulate the snow light reflecting off of snow
 const ambience = new THREE.AmbientLight( 0x404040 );

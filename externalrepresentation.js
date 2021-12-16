@@ -15,6 +15,12 @@ function updateScene(state, tapestry) {
 	current_scene.add(skiier);
 	// console.log(skiier.position);
     }
+    /* adding the monster */ {
+	let {x, z} = state.monster.position;
+	let monster = Monster();
+	monster.position.set(x, 0.5, z);
+	current_scene.add(monster);
+    }
     
     current_scene.add(tapestry.camera);
 

@@ -50,8 +50,8 @@ let state = {
     monsterIn: false,
     monster: {
 	position: { // The monster always spawns at the edge of the scene
-	    x : MAP_SIZE,
-	    z : MAP_SIZE,
+	    x : 50,
+	    z : 100,
 	},
 	health: MONSTER_BASE_HEALTH,
     },
