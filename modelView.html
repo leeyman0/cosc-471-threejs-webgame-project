@@ -1,0 +1,184 @@
+<html>
+  <head>
+    <title>Graphical View of Models</title>
+  </head>
+  <body>
+    <h1>Graphical View of Models</h1>
+    <canvas id="c"></canvas>
+    <script src="./three.min.js"></script>
+    <script>
+      function Skiier() {
+	  let skiier = new THREE.Group();
+	  // The head shall be a sphere
+	  const headGeometry = new THREE.SphereGeometry(0.75);
+	  const headMaterial = new THREE.MeshPhongMaterial({
+	      color : 0xAAAAFF,
+	      
+	  });
+	  const head = new THREE.Mesh(headGeometry, headMaterial);
+	  head.position.y = 1;
+
+	  skiier.add(head);
+	  
+	  // The body shall be a cylinder
+	  const bodyGeometry = new THREE.CylinderGeometry(0.25, 0.25, 1, 16);
+	  const bodyMaterial = new THREE.MeshPhongMaterial({
+	      color : 0x3333AA,
+	  });
+	  const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+	  
+	  skiier.add(body);
+	  
+	  // The board will be a box
+	  const boardGeometry = new THREE.BoxGeometry(1, 2, 0.1);
+	  const boardMaterial = new THREE.MeshLambertMaterial({
+	      color : 0x111111,
+	  });
+	  const board = new THREE.Mesh(boardGeometry, boardMaterial);
+	  board.rotateX(Math.PI * 0.5);
+	  board.position.y = -0.5;
+	  
+	  skiier.add(board);
+	  // Return the skiier
+	  return skiier;
+      }
+      // // Testing the skiier
+      // let the_guy = Skiier();
+      // the_guy.position.set(0, 0, 0);
+      // the_guy.rotateY(Math.PI * 0.5);
+      // tapestry.scene.add(the_guy);
+
+      const TREE_RADIUS = 1;
+      
+      function Tree() {
+	  let tree = new THREE.Group();
+
+	  const tree_color = 0x669900; 
+
+	  const tree_material = new THREE.MeshPhongMaterial({
+	      color: tree_color
+	  });
+	  
+	  const tree_geom_part_1 = new THREE.BoxGeometry(TREE_RADIUS * 2,
+							 1,
+							 TREE_RADIUS * 2);
+
+	  const tree_geom_part_2 = new THREE.BoxGeometry(TREE_RADIUS * 1.8,
+							 1.2,
+							 TREE_RADIUS * 1.8);
+
+	  const tree1 = new THREE.Mesh(tree_geom_part_1, tree_material);
+	  tree1.position.y -= 0.1;
+	  
+	  const tree2 = new THREE.Mesh(tree_geom_part_2, tree_material);
+	  // tree2.position.x += TREE_RADIUS * 0.1;
+	  // tree2.position.z += TREE_RADIUS * 0.1;
+
+	  tree.add(tree1);
+	  tree.add(tree2);
+
+	  return tree;
+      }
+      // // Testing the tree
+      // let the_guy = Tree();
+      // the_guy.position.set(0, 0, 0);
+      // the_guy.rotateY(Math.PI * 0.25);
+      // tapestry.scene.add(the_guy);
+
+      const MONSTER_RADIUS = 1;
+      
+      // Our monster is vegetarian, he just chases the guy because he smells cheese
+      // puffs.
+      function Monster() {
+	  let monster = new THREE.Group();
+
+	  const monstermaterial = new THREE.MeshPhongMaterial({
+	      color : 0x990099,
+	  });
+	  
+	  const monsterbodygeometry = new THREE.SphereGeometry(1);
+
+	  const monsterlimbgeometry = new THREE.SphereGeometry(0.25);
+
+	  const monsterheadgeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+
+	  const monster_body = new THREE.Mesh(monsterbodygeometry, monstermaterial);
+	  
+	  const monster_right_arm = new THREE.Mesh(monsterlimbgeometry,
+						   monstermaterial);
+	  const monster_left_arm = new THREE.Mesh(monsterlimbgeometry,
+						  monstermaterial);
+	  const monster_right_leg = new THREE.Mesh(monsterlimbgeometry,
+						   monstermaterial);
+	  const monster_left_leg = new THREE.Mesh(monsterlimbgeometry,
+						  monstermaterial);
+
+	  const monster_head = new THREE.Mesh(monsterheadgeometry,
+					      monstermaterial);
+
+	  // Adjusting the positions of each part of the monster. until we get
+	  // the shapes that we want
+	  monster_head.position.y += MONSTER_RADIUS;
+
+	  monster_left_arm.position.x -= MONSTER_RADIUS;
+	  monster_left_arm.position.y += MONSTER_RADIUS;
+	  monster_left_leg.position.x -= MONSTER_RADIUS;
+	  monster_left_leg.position.y -= MONSTER_RADIUS;
+	  monster_right_arm.position.x += MONSTER_RADIUS;
+	  monster_right_arm.position.y += MONSTER_RADIUS;
+	  monster_right_leg.position.x += MONSTER_RADIUS;
+	  monster_right_leg.position.y -= MONSTER_RADIUS;
+	  
+	  monster.add(monster_body);
+	  monster.add(monster_left_arm);
+	  monster.add(monster_right_arm);
+	  monster.add(monster_left_leg);
+	  monster.add(monster_right_leg);
+	  monster.add(monster_head);
+
+	  return monster;
+      }
+
+      // // Testing the monster
+      // let the_guy = Monster();
+      // the_guy.position.set(0, 0, 0);
+      // the_guy.rotateY();
+      // tapestry.scene.add(the_guy);
+
+      
+      function display_model(model, canvas_id) {
+	  let canvas = document.getElementById(canvas_id);
+
+	  canvas.width = 500;
+	  canvas.height = 500;
+	  
+	  let scene = new THREE.Scene();
+	  
+	  let renderer = new THREE.WebGLRenderer({ canvas });
+	  renderer.setClearColor(0xAAAAEE, 1);
+	  
+	  let light = new THREE.HemisphereLight(0xAAAAEE, 0xFFFFFF, 0.6);
+
+	  let camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+
+	  // Setting all of the positions
+	  camera.position.set(0, 0, 5);
+	  model.position.set(0, 0, 0);
+	  model.rotateY(Math.PI * 0.25);
+	  // model.rotateX(Math.PI * 0.1);
+	  // model.rotateZ(Math.PI * 0.1);
+	  light.position.set(0, 5, 0);
+	  camera.lookAt(model.position);
+
+	  scene.add(camera);
+	  scene.add(model);
+	  scene.add(light);
+
+	  renderer.render(scene, camera);
+	  
+      }
+
+      display_model(Skiier(), "c");
+    </script>
+  </body>
+</html>

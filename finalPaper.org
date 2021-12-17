@@ -28,7 +28,9 @@
    through a hole in a surface in order to progress to another level. It was later
    decided that there was too little time to implement it before the end of the
    semester, so instead another premise had to be chosen for the game.
-   The chosen idea was inspired by a youtube video on a 3D Dinosaur Game project.
+   The chosen idea was inspired by a youtube video on a
+   3D Dinosaur Game project.
+   [fn:: This one: [[https://www.youtube.com/watch?v=KJ38qCwFdy8]]]
 
    One challenge was the UI of the application. By design, three.js does not
    natively support 2D graphical overlays. There are multiple ways of overcoming
